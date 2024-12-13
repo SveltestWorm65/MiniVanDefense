@@ -59,14 +59,6 @@ public class SpawnManager : MonoBehaviour
         float yPos = Random.Range(-yRange, yRange);
         float zPos = Random.Range(-zRange, zRange);
         Vector3 RandomPosition = new Vector3(xPos, yPos, zPos);
-
-        while ((RandomPosition - playerController.transform.position).magnitude < safetyRadius)
-        {
-            xPos = Random.Range(-xRange, xRange);
-            yPos = Random.Range(-yRange, yRange);
-            zPos = Random.Range(-zRange, zRange);
-            RandomPosition = new Vector3(xPos, yPos, zPos);
-        }
         return RandomPosition;
     }
     public void SpawnPrefab()
