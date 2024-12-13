@@ -64,13 +64,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //keeping player in the z bound 
-        if (transform.position.z < -5.15)
+       /* if (transform.position.z < -5.15)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -5.15f);
         }
         if (transform.position.z > -7.5)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -5.15f);
-        }
+        }*/
     }
 }
