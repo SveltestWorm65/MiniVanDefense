@@ -16,9 +16,6 @@ public class SpawnManager : MonoBehaviour
     public int enemyCount;
     public int waveNumber = 1;
 
-    [Header("Floats")]
-    public float safetyRadius;
-
     [Header("GameManager")]
     public GameManager gm;
 
@@ -41,7 +38,7 @@ public class SpawnManager : MonoBehaviour
         {
             waveNumber++;
             SpawnEnemyWave(waveNumber);
-
+            gm.AddWave(1);
         }
        
     }
@@ -57,8 +54,8 @@ public class SpawnManager : MonoBehaviour
     {
         float xPos = Random.Range(-xRange, xRange);
         float yPos = Random.Range(-yRange, yRange);
-        float zPos = Random.Range(-zRange, zRange);
-        Vector3 RandomPosition = new Vector3(xPos, yPos, zPos);
+       
+        Vector3 RandomPosition = new Vector3(xPos, yPos, 8.95f);
         return RandomPosition;
     }
     public void SpawnPrefab()

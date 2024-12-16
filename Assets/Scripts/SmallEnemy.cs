@@ -9,13 +9,17 @@ public class SmallEnemy : MonoBehaviour
 
     [Header("Components")]
     public Rigidbody enemyRb;
+
+    [Header("Scripts")]
+    public GameManager gm;
     // Start is called before the first frame update
     void Start()
     {
         //getting the components
         enemyRb = GetComponent<Rigidbody>();
 
-        
+        //getting the gameObjects and Scripts
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -40,6 +44,7 @@ public class SmallEnemy : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(other.gameObject);
+            gm.AddScore(1);
         }
     }
 }
