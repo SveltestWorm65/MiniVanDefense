@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmallEnemy : MonoBehaviour
+public class BigEnemy : MonoBehaviour
 {
     [Header("Floats")]
     public float moveSpeed;
+
+    [Header("Ints")]
+    public int hp;
 
     [Header("Components")]
     public Rigidbody enemyRb;
@@ -25,7 +28,7 @@ public class SmallEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
 
         //take damage if they reach a line
         if (transform.position.z < -5.15)
@@ -40,16 +43,24 @@ public class SmallEnemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Projectile"))
+      
+        if (other.gameObject.CompareTag("Projectile"))
         {
-            Destroy(gameObject);
+            hp = hp - 1;
             Destroy(other.gameObject);
-            gm.AddScore(1);
+            if (hp <= 0)
+            {
+                Destroy(gameObject);
+                Destroy(other.gameObject);
+                gm.AddScore(2);
+            }
+         
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+
     }
 }
+

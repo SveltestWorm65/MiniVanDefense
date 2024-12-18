@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
         //getting the gameObjects and components
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         sm = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+
+        //Starting the game at wave 1
+        UpdateWave();
     }
 
     //Updating the score
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     public void LooseLife()
     {
-        lives -= 1;
+        lives --;
         UpdateLives();
     }
 
@@ -61,8 +64,9 @@ public class GameManager : MonoBehaviour
     {
         waveCounter.text = $"Wave: {waves}";
     }
-    public void AddWave(int WaveToAdd)
+    public void AddWave()
     {
+        waves++;
         UpdateWave();
     }
 }
