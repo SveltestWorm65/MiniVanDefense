@@ -35,22 +35,21 @@ public class SpawnManager : MonoBehaviour
 
         //spawning the waves
         SpawnEnemyWave(waveNumber);
-
-     
-
     }
 
     // Update is called once per frame
     public void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (enemyCount == 0)
-        {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
-            gm.AddWave();
-        }
-       
+       // if (playerController.gameOver == true)
+        //{
+            if (enemyCount == 0)
+            {
+                waveNumber++;
+                SpawnEnemyWave(waveNumber);
+                gm.AddWave();
+            }
+        //}
     }
 
     void SpawnEnemyWave(int enemiesToSpawn)
@@ -89,17 +88,7 @@ public class SpawnManager : MonoBehaviour
                 }
             }
         }
-
-       /* while ((RandomPosition - enemyPrefab[index].transform.position).magnitude < safetyRadius)
-        {
-            xPos = Random.Range(-xRange, xRange);
-            yPos = Random.Range(-yRange, yRange);
-            zPos = Random.Range(-zRange, zRange);
-            RandomPosition = new Vector3(xPos, yPos, zPos);
-        }*/
         return RandomPosition;
-
-       
     }
     public void SpawnPrefab()
     {

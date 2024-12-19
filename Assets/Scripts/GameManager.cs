@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         //starting the everything at default values
         score = 0;
-        lives = 3;
+        lives = 5;
         waves = 1;
 
         //getting the gameObjects and components

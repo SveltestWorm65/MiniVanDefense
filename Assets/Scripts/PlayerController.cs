@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +19,13 @@ public class PlayerController : MonoBehaviour
     [Header("GameObjects")]
     public GameObject projectilePrefab;
     public GameObject projectileSpawner;
+    public GameObject levelControl;
+
+    [Header("Bools")]
+    public bool gameOver = false;
+
+    [Header("Scripts")]
+    public GameManager gm;
 
     [Header("Components")]
     public Rigidbody rb;
@@ -23,12 +33,21 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip pewpewClip;
+    public AudioClip playerDamaged;
+
+    [Header("UI Elements")]
+    public TextMeshProUGUI deathTxt;
+    public Button Restart;
     // Start is called before the first frame update
     void Start()
     {
         //Getting the players components
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+
+        //getting the game objects and their components
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        levelControl = GameObject.Find("LevelController");
     }
 
     // Update is called once per frame
@@ -46,11 +65,13 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         //Shooting
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Shoot"))
+        if (gameOver == false)
         {
-            Instantiate(projectilePrefab, projectileSpawner.transform.position, projectileSpawner.transform.rotation);
-            audioSource.PlayOneShot(pewpewClip);
-
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Shoot"))
+            {
+                Instantiate(projectilePrefab, projectileSpawner.transform.position, projectileSpawner.transform.rotation);
+                audioSource.PlayOneShot(pewpewClip);
+            }
         }
 
         //Keeping player in the x bound
@@ -61,16 +82,41 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > xRange)
         {
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
-        }
+        }   
 
-        //keeping player in the z bound 
-       /* if (transform.position.z < -5.15)
+      
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy"))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -5.15f);
+            gm.LooseLife();
+            Destroy(collision.gameObject);
+            if(gm.lives <= 0)
+            {
+                gameOver = true;
+                moveSpeed = 0;
+                Restart.gameObject.SetActive(true);
+                deathTxt.gameObject.SetActive(true);
+                levelControl.gameObject.SetActive(true);
+            }
         }
-        if (transform.position.z > -7.5)
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -5.15f);
-        }*/
+            gm.LooseLife();
+            Destroy(other.gameObject);
+            if (gm.lives <= 0)
+            {
+                gameOver = true;
+                moveSpeed = 0;
+                Restart.gameObject.SetActive(true);
+                deathTxt.gameObject.SetActive(true);
+                levelControl.gameObject.SetActive(true);
+            }
+        }
+        
     }
 }

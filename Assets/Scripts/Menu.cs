@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     public void OnPlayButton(string level)
     {
-        if (Input.GetButtonDown("Shoot") || Input.GetKeyDown(KeyCode.Space))
+        SceneManager.LoadScene(level);
+
+        if (Input.GetButtonDown("Start"))
         {
-            SceneManager.LoadScene(level);
+            SceneManager.LoadScene("MainLevel");
         }
     }
     public void OnApplicationQuit()
     {
         Application.Quit();
     }
+   
 }
