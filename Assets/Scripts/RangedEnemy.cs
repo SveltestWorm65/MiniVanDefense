@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmallEnemy : MonoBehaviour
+public class RangedEnemy : MonoBehaviour
 {
     [Header("Floats")]
     public float moveSpeed;
+
+    [Header("Ints")]
+    public int hp;
 
     [Header("Components")]
     public Rigidbody enemyRb;
@@ -17,8 +20,11 @@ public class SmallEnemy : MonoBehaviour
     [Header("Audio")]
     public AudioSource enemyAudio;
     public AudioClip killed;
+    public AudioClip enemyDamaged;
 
     [Header("GameObjects")]
+    public GameObject enemyProjectile;
+    public GameObject projectileSpawner;
     public GameObject playerBorder2;
     // Start is called before the first frame update
     void Start()
@@ -33,17 +39,21 @@ public class SmallEnemy : MonoBehaviour
         //getting the gameObjects and Scripts
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        StartCoroutine(Shoot());
     }
 
     // Update is called once per frame
     void Update()
     {
-        //take damage if they reach a line and kill the enemy too
-    /*    if (transform.position.z < -8.75)
-        {
-            gm.LooseLife();
-            Destroy(gameObject);
-        }*/
+
+
+    }
+    public IEnumerator Shoot()
+    {
+        Instantiate(enemyProjectile, projectileSpawner.transform.position, projectileSpawner.transform.rotation);
+        yield return new WaitForSeconds(2.5f);
+        StartCoroutine(Shoot());
     }
     private void FixedUpdate()
     {
@@ -52,31 +62,32 @@ public class SmallEnemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Projectile"))
+        if (other.gameObject.CompareTag("Projectile"))
         {
-            enemyAudio.PlayOneShot(killed);
-            Destroy(gameObject);
+            hp = hp - 1;
+            enemyAudio.PlayOneShot(enemyDamaged);
             Destroy(other.gameObject);
-            gm.AddScore(1);
-        }
-
-        if(other.gameObject.CompareTag("Border"))
-        {
-            gm.LooseLife();
-            Destroy(gameObject);
-            if (gm.lives <= 0)
+            if (hp <= 0)
             {
-                pc.gameOver = true;
-                pc.moveSpeed = 0;
-                pc.Restart.gameObject.SetActive(true);
-                pc.deathTxt.gameObject.SetActive(true);
-                pc.levelController.gameObject.SetActive(true);
+                enemyAudio.PlayOneShot(killed);
+                Destroy(gameObject);
+                Destroy(other.gameObject);
+                gm.AddScore(1);
+            }
+
+            if (other.gameObject.CompareTag("Border"))
+            {
+                gm.LooseLife();
+                Destroy(gameObject);
+                if (gm.lives <= 0)
+                {
+                    pc.gameOver = true;
+                    pc.moveSpeed = 0;
+                    pc.Restart.gameObject.SetActive(true);
+                    pc.deathTxt.gameObject.SetActive(true);
+                    pc.levelController.gameObject.SetActive(true);
+                }
             }
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-       
     }
 }

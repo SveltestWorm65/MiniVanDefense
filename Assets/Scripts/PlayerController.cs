@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-
 public class PlayerController : MonoBehaviour
 {
     [Header("Limitations")]
@@ -19,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [Header("GameObjects")]
     public GameObject projectilePrefab;
     public GameObject projectileSpawner;
-    public GameObject levelControl;
 
     [Header("Bools")]
     public bool gameOver = false;
@@ -37,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI Elements")]
     public TextMeshProUGUI deathTxt;
+    public TextMeshProUGUI levelController;
     public Button Restart;
     // Start is called before the first frame update
     void Start()
@@ -47,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
         //getting the game objects and their components
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        levelControl = GameObject.Find("LevelController");
+       
     }
 
     // Update is called once per frame
@@ -88,7 +86,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+/*        if(collision.gameObject.CompareTag("Enemy"))
         {
             gm.LooseLife();
             Destroy(collision.gameObject);
@@ -98,9 +96,9 @@ public class PlayerController : MonoBehaviour
                 moveSpeed = 0;
                 Restart.gameObject.SetActive(true);
                 deathTxt.gameObject.SetActive(true);
-                levelControl.gameObject.SetActive(true);
+               
             }
-        }
+        }*/
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -114,7 +112,7 @@ public class PlayerController : MonoBehaviour
                 moveSpeed = 0;
                 Restart.gameObject.SetActive(true);
                 deathTxt.gameObject.SetActive(true);
-                levelControl.gameObject.SetActive(true);
+                levelController.gameObject.SetActive(true);
             }
         }
         

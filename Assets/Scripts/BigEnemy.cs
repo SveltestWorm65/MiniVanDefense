@@ -77,7 +77,7 @@ public class BigEnemy : MonoBehaviour
                 pc.moveSpeed = 0;
                 pc.Restart.gameObject.SetActive(true);
                 pc.deathTxt.gameObject.SetActive(true);
-                pc.levelControl.gameObject.SetActive(true);
+                pc.levelController.gameObject.SetActive(true);
             }
         }
     }

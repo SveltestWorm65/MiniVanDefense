@@ -41,15 +41,15 @@ public class SpawnManager : MonoBehaviour
     public void Update()
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-       // if (playerController.gameOver == true)
-        //{
+        if (playerController.gameOver == false)
+        {
             if (enemyCount == 0)
             {
                 waveNumber++;
                 SpawnEnemyWave(waveNumber);
                 gm.AddWave();
             }
-        //}
+        }
     }
 
     void SpawnEnemyWave(int enemiesToSpawn)
