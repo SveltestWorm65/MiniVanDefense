@@ -75,7 +75,9 @@ public class RangedEnemy : MonoBehaviour
                 gm.AddScore(1);
             }
 
-            if (other.gameObject.CompareTag("Border"))
+
+            
+           if (other.gameObject.CompareTag("Border"))
             {
                 gm.LooseLife();
                 Destroy(gameObject);

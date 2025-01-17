@@ -181,14 +181,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.05
-  shootDelay: 0
   hp: 2
   enemyRb: {fileID: 1981123461634825285}
   gm: {fileID: 0}
   pc: {fileID: 0}
   enemyAudio: {fileID: 6096702613864672049}
-  killed: {fileID: 0}
-  enemyDamaged: {fileID: 0}
+  killed: {fileID: 8300000, guid: 2e75794743d3a574ea38860dc65c81e1, type: 3}
+  enemyDamaged: {fileID: 8300000, guid: ac6b723a4d517b4468eebff5bf84fa6a, type: 3}
   enemyProjectile: {fileID: 2652555729891907215, guid: 738b871d32380ba42aa81216d409c2fb, type: 3}
   projectileSpawner: {fileID: 7162496932690063614}
   playerBorder2: {fileID: 0}
